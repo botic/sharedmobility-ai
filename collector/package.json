@@ -2,6 +2,7 @@
   "name": "collector",
   "version": "1.0.0",
   "description": "Imports station data into the SMAI database.",
+  "private": true,
   "main": "src/index.js",
   "scripts": {
     "test": "jest"
