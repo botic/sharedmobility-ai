@@ -1,0 +1,40 @@
+{
+  "stationlist":[
+    {
+      "id": 10000,
+      "name": "Mimi-Grossberg-Gasse 11",
+      "type": "BS0000",
+      "address":{
+        "countryCode": "AT",
+        "city": "Wien",
+        "zipCode": 1220,
+        "streetAddress": [
+          "Mimi-Grossberg-Gasse 11"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "location": {
+        "x": 16.4994381,
+        "y": 48.2250902
+      },
+      "bikeCnt": 2,
+      "ebikeCnt": 1,
+      "boxAvailCnt": 12,
+      "emptyCnt": 9,
+      "boxErrCnt": 0,
+      "boxOfflineCnt": 0,
+      "offline": false,
+      "_id":"asdfasfasdfasdfasdfsadfasd",
+      "display":{
+        "resolutionX": 1024,
+        "resolutionY": 768
+      },
+      "subscriptions": "",
+      "temperature": {
+        "key": 123123123123,
+        "value": -1.123123123
+      },
+      "box": []
+    }
+  ]
+}
