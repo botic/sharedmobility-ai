@@ -1,5 +1,11 @@
 # sharedmobility-ai
-Removes customer frustration from shared mobility services. Supported by Netidee Call 13.
+Removes customer frustration from shared mobility services. We saw the rise of shared mobility services in the last years. Most of the newcomers are free-floating shared-use systems. These systems operate on a data-driven approach and try to reach profitability by optimizing their fleets. Station-based solutions need enhancements by smart data-driven technologies to keep pace with their new competitors. SharedMobility.ai is an Open Source approach to provide simple smart features to existing station-based services.
+
+## Components
+
+- **Analytics:** Scripts to analyze the input data.
+- **Collector:** Reads station data from a `.tar.gz` archive and imports it into the Postgres data backend.
+
 
 ## Supported by Netidee Call 13
 
