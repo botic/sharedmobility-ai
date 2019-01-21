@@ -17,3 +17,8 @@
 You find more information about our Netidee grant on our [Netidee project page](https://netidee.at/sharedmobilityai). Netidee supports Internet and Open Source ideas with up to 50.000 Euro in funding. If you are working on an Open Source projects and are permanent resident in Austria, [apply](https://netidee.at/einreichen) for your own funding!
 
 <img src="https://sharedmobility.ai/wp-content/uploads/2018/11/netidee-Logo-HiRes300dpi-Projekte-Standard-768x233.jpg" alt="Netidee Logo" width="250">
+
+# License
+
+- Source code and similar artifacts are licensed under GNU Affero General Public License  3.0 (AGPL 3.0)
+- Documentation, project reports and similar artifacts are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)
