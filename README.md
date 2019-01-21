@@ -6,6 +6,11 @@
 - **Analytics:** Scripts to analyze the input data.
 - **Collector:** Reads station data from a `.tar.gz` archive and imports it into the Postgres data backend.
 
+## Core Team
+
+- Philipp Naderer-Puiu / [@botic](https://twitter.com/botic)
+- Weronika Wesołowska
+- Lisa Vietze
 
 ## Supported by Netidee Call 13
 
