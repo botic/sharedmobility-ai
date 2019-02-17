@@ -1,4 +1,5 @@
-# SharedMobility.ai
+<h1><img src="https://sharedmobility.ai/wp-content/uploads/2019/02/logosharedmobility-02-1.svg" alt="SharedMobility.ai" width="350"></h1>
+
 [SharedMobility.ai](https://sharedmobility.ai/) removes customer frustration from shared mobility services. We saw the rise of shared mobility services in the last years. Most of the newcomers are free-floating shared-use systems. These systems operate on a data-driven approach and try to reach profitability by optimizing their fleets. Station-based solutions need enhancements by smart data-driven technologies to keep pace with their new competitors. SharedMobility.ai is an Open Source approach to provide simple smart features to existing station-based services.
 
 ## Components
