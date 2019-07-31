@@ -18,7 +18,7 @@ program
     .command("import <service-name> <input-bundle>")
     .description("Imports the given .tar.gz file for the given service.")
     .action((serviceName = "", inputPath = "") => {
-        require(`./services/${serviceName}/collector`)(inputPath);
+        require(`./services/${serviceName}/snapshot-importer`)(inputPath);
     });
 
 // Database Initialization
