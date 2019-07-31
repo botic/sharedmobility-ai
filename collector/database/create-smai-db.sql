@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS smai_snapshot (
     PRIMARY KEY( snp_id ),
 
 --  check if the given count is correct and valid
+    CONSTRAINT no_duplicated_snapshots UNIQUE(snp_sta_id, snp_timestamp),
     CONSTRAINT valid_vehicles_available CHECK (snp_vehicles_available >= 0),
     CONSTRAINT valid_vehicles_faulty CHECK (snp_vehicles_faulty >= 0 or snp_vehicles_faulty is null),
     CONSTRAINT valid_boxes_available CHECK (snp_boxes_available >= 0),
