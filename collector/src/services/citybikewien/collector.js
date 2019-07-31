@@ -8,8 +8,8 @@ const config = require("../../config");
 const {
     STATION_OPERATIONAL,
     STATION_OUTAGE,
-    SEESTADTFLOTTE_TIMEZONE,
-    SEESTADTFLOTTE_SERVICE_SLUG
+    CITYBIKEWIEN_TIMEZONE,
+    CITYBIKEWIEN_SERVICE_SLUG
 } = require("../../constants");
 
 const targzIterator = require("../../targz-iterator");
@@ -37,24 +37,26 @@ module.exports = async (inputFile) => {
  */
 async function importSnapshots(db, inputFile, stations) {
     return targzIterator(db, inputFile, (obj, header) => {
-        if (!Array.isArray(obj.stationlist) || obj.stationlist.length === 0) {
+        if (!Array.isArray(obj.network.stations) || obj.network.stations.length === 0) {
             return [];
         }
 
         const smaiSnapshots = [];
-        const fileDateTime = filenameToDateTime(header.name, SEESTADTFLOTTE_TIMEZONE);
-        const sycSnapshots = processStationList(obj.stationlist);
+        const fileDateTime = filenameToDateTime(header.name, CITYBIKEWIEN_TIMEZONE);
+        const citybikeSnapshots = processStationList(obj.network.stations);
 
-        for (const sycSnapshot of sycSnapshots) {
-            const {id} = stations.find(station => station.internalId === String(sycSnapshot.station.id));
+        for (const citybikeSnapshot of citybikeSnapshots) {
+            const {id} = stations.find(
+                station => station.internalId === `${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`
+            );
             smaiSnapshots.push({
                 smaiId: id,
                 timestamp: fileDateTime.toUTC().toSQL(),
-                stationStatus: sycSnapshot.snapshot.stationStatus,
-                vehiclesAvailable: sycSnapshot.snapshot.vehiclesAvailable,
-                vehiclesFaulty: sycSnapshot.snapshot.vehiclesFaulty,
-                boxesAvailable: sycSnapshot.snapshot.boxesAvailable,
-                boxesFaulty: sycSnapshot.snapshot.boxesFaulty
+                stationStatus: citybikeSnapshot.snapshot.stationStatus,
+                vehiclesAvailable: citybikeSnapshot.snapshot.vehiclesAvailable,
+                vehiclesFaulty: citybikeSnapshot.snapshot.vehiclesFaulty,
+                boxesAvailable: citybikeSnapshot.snapshot.boxesAvailable,
+                boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
             });
         }
 
@@ -89,11 +91,14 @@ function processStationList(stationList) {
 function stationToSnapshot(station) {
     const snapshot = Object.create(null);
 
-    snapshot.stationStatus = station.offline === false ? STATION_OPERATIONAL : STATION_OUTAGE;
-    snapshot.vehiclesAvailable = station.bikeCnt + station.ebikeCnt;
+    const slots = parseInt(station.extra.slots, 10);
+    snapshot.stationStatus = (station.extra.status || "").toLowerCase() === "aktiv" ? STATION_OPERATIONAL : STATION_OUTAGE;
+    snapshot.vehiclesAvailable = station.free_bikes || 0;
     snapshot.vehiclesFaulty = 0;
-    snapshot.boxesAvailable = station.emptyCnt;
-    snapshot.boxesFaulty = station.boxErrCnt + station.boxOfflineCnt;
+    snapshot.boxesAvailable = station.empty_slots;
+    snapshot.boxesFaulty = slots > 0 && slots < (station.empty_slots + station.free_bikes)
+        ? slots - (station.empty_slots + station.free_bikes)
+        : 0;
 
     return snapshot;
 }
@@ -102,12 +107,12 @@ function stationToSnapshot(station) {
  * Returns the timestamp in milliseconds for the given filename.
  *
  * @type {function(string, string): DateTime}
- * @param {string} filename the filename in the format './seestadtFlotte-2018-09-12__22_35_01.json'
+ * @param {string} filename the filename in the format './citybike-2018-09-12__22_35_01.json'
  * @param {string} stationTimezoneName IANA timezone name, e.g. 'Europe/Vienna'
  * @returns {DateTime} a Luxon DateTime object representing the create time of the given filename
  */
 function filenameToDateTime(filename, stationTimezoneName) {
-    const parts = filename.match(/^(?:\.\/)?seestadtFlotte-(20\d{2}-\d{2}-\d{2})__([012]\d_[012345]\d_[012345]\d)\.json$/);
+    const parts = filename.match(/^(?:\.\/)?citybike-(20\d{2}-\d{2}-\d{2})__([012]\d_[012345]\d_[012345]\d)\.json$/);
     if (!parts || parts.length !== 3) {
         logger.error("Invalid filename! " + filename);
         return null;
@@ -118,9 +123,9 @@ function filenameToDateTime(filename, stationTimezoneName) {
 
 async function getServiceId(db) {
     const {ser_id} = await db.one({
-        name: "check-seestadtflotte-service",
+        name: "check-citybikewien-service",
         text: "SELECT ser_id FROM smai_service WHERE ser_slug = $1",
-        values: [SEESTADTFLOTTE_SERVICE_SLUG]
+        values: [CITYBIKEWIEN_SERVICE_SLUG]
     });
     return ser_id;
 }

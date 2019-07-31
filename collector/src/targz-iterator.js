@@ -23,9 +23,9 @@ function isString(str) {
 function isValidSnapshot(snapshot) {
     return typeof snapshot === "object" &&
         Object.keys(snapshot).every(
-            key => ["internalId", "timestamp", "stationStatus", "vehiclesAvailable", "vehiclesFaulty", "boxesAvailable", "boxesFaulty"].indexOf(key) >= 0
+            key => ["smaiId", "timestamp", "stationStatus", "vehiclesAvailable", "vehiclesFaulty", "boxesAvailable", "boxesFaulty"].indexOf(key) >= 0
         ) &&
-        snapshot.hasOwnProperty("internalId") && isString(snapshot.internalId) &&
+        snapshot.hasOwnProperty("smaiId") && Number.isSafeInteger(snapshot.smaiId) &&
         snapshot.hasOwnProperty("timestamp") && isString(snapshot.timestamp) &&
         snapshot.hasOwnProperty("stationStatus") && isString(snapshot.stationStatus) &&
         snapshot.hasOwnProperty("vehiclesAvailable") && Number.isSafeInteger(snapshot.vehiclesAvailable) &&
@@ -65,6 +65,16 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                 // stream => the content body as stream
                 // next => callback to notify the tar-stream reader after processing the entry
                 helper = (header, stream, next) => {
+                    // snapshots must have at least 100 bytes to be parsed
+                    if (header.size < 100) {
+                        push({
+                            smaiSnapshots: [],
+                            next
+                        });
+
+                        return;
+                    }
+
                     // concat all stream parts into a single buffer
                     stream.pipe(concat((data) => {
                         // data is quite large since it carries so many non-relevant details,
@@ -77,8 +87,9 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                         }
 
                         // validates every converted snapshot
-                        if (!smaiSnapshots.every(isValidSnapshot)) {
-                            fail(Error(`Invalid snapshot provided by the snapshot converter function!`));
+                        const invalidSnapshot = smaiSnapshots.find(snapshot => !isValidSnapshot(snapshot));
+                        if (invalidSnapshot !== undefined) {
+                            fail(Error(`Invalid snapshot provided by the snapshot converter function!\n${JSON.stringify(invalidSnapshot, null, 2)}`));
                         }
 
                         // security check: is the object valid?
@@ -117,7 +128,7 @@ module.exports = async function(db, inputFile, snapshotConverter) {
     // name => the table's column name
     // prop => the data object's property to use for the column
     const cs = new pgp.helpers.ColumnSet([
-        {name: "snp_sta_id", prop: "internalId"},
+        {name: "snp_sta_id", prop: "smaiId"},
         {name: "snp_timestamp", prop: "timestamp"},
         {name: "snp_station_status", prop: "stationStatus"},
         {name: "snp_vehicles_available", prop: "vehiclesAvailable"},
