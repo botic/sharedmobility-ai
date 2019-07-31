@@ -4,7 +4,7 @@ const tar = require("tar-stream");
 const gunzip = require("gunzip-maybe");
 const concat = require("concat-stream");
 
-const logger = require("../../logging");
+const logger = require("../../../logging");
 
 module.exports = async function(stations, inputFile) {
     return new Promise((resolve, reject) => {
@@ -25,6 +25,10 @@ module.exports = async function(stations, inputFile) {
             const stream = fs.createReadStream(inputFile);
             stream.pipe(gunzip()).pipe(tar.extract())
                 .on("entry", function (header, stream, next) {
+                    if (header.size === 0) {
+                        return next();
+                    }
+
                     stream.pipe(concat((data) => {
                         try {
                             const obj = JSON.parse(data.toString());

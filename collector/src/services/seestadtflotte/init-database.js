@@ -1,8 +1,8 @@
 const slugify = require("slugify");
 const pgp = require("pg-promise")();
 
-const config = require("../config");
-const logger = require("../logging");
+const config = require("../../config");
+const logger = require("../../logging");
 
 const findStations = require("./tar-readers/station-finder");
 const stationCoverageCheck = require("./tar-readers/station-coverage");
@@ -10,7 +10,7 @@ const stationCoverageCheck = require("./tar-readers/station-coverage");
 const {
     SEESTADTFLOTTE_SERVICE_SLUG,
     SEESTADTFLOTTE_STATION_PREFIX
-} = require("../constants");
+} = require("../../constants");
 
 module.exports = async function(inputFile) {
     const db = pgp(config.get("db"));

@@ -4,7 +4,7 @@ const tar = require("tar-stream");
 const gunzip = require("gunzip-maybe");
 const concat = require("concat-stream");
 
-const logger = require("../../logging");
+const logger = require("../../../logging");
 
 /**
  * Finds and collects all distinct stations inside the tar.gz archive.
@@ -20,6 +20,10 @@ module.exports = async function(inputFile) {
             const stream = fs.createReadStream(inputFile);
             stream.pipe(gunzip()).pipe(tar.extract())
                 .on("entry", function (header, stream, next) {
+                    if (header.size === 0) {
+                        return next();
+                    }
+
                     stream.pipe(concat((data) => {
                         try {
                             const obj = JSON.parse(data.toString());

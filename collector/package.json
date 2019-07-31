@@ -1,6 +1,6 @@
 {
   "name": "collector",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Imports station data into the SMAI database.",
   "private": true,
   "main": "src/index.js",
@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/sharedmobility.ai/collector.git"
+    "url": "https://github.com/botic/sharedmobility-ai.git",
+    "directory": "collector"
   },
   "keywords": [
     "sharedmobility",
@@ -19,17 +20,17 @@
   "author": "Philipp Naderer-Puiu",
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://gitlab.com/sharedmobility.ai/collector/issues"
+    "url": "https://github.com/botic/sharedmobility-ai/issues"
   },
-  "homepage": "https://gitlab.com/sharedmobility.ai/collector#readme",
+  "homepage": "https://sharedmobility.ai/",
   "dependencies": {
     "commander": "^2.20.0",
     "concat-stream": "^2.0.0",
     "event-iterator": "^1.2.0",
     "gunzip-maybe": "^1.4.1",
-    "luxon": "^1.17.1",
+    "luxon": "^1.17.2",
     "nconf": "^0.10.0",
-    "pg-promise": "^8.7.5",
+    "pg-promise": "^9.0.0",
     "slugify": "^1.3.4",
     "tar-stream": "^2.1.0",
     "winston": "^3.2.1"

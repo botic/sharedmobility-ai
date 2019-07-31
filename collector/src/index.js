@@ -15,18 +15,18 @@ program
 
 // Import
 program
-    .command("import [input-bundle]")
-    .description("Imports the given .tar.gz file as SeestadtFLOTTE data.")
-    .action((inputPath = "") => {
-        require("./seestadtflotte/collector")(inputPath);
+    .command("import <service-name> <input-bundle>")
+    .description("Imports the given .tar.gz file for the given service.")
+    .action((serviceName = "", inputPath = "") => {
+        require(`./services/${serviceName}/collector`)(inputPath);
     });
 
 // Database Initialization
 program
-    .command("init-database [input-bundle]")
-    .description("Initializes the service and stations for SeestadtFLOTTE in the database.")
-    .action((inputPath = "") => {
-        require("./seestadtflotte/init-database")(inputPath);
+    .command("init-database <service-name> <input-bundle>")
+    .description("Initializes the service and stations for the given service in the database.")
+    .action((serviceName = "", inputPath = "") => {
+        require(`./services/${serviceName}/init-database`)(inputPath);
     });
 
 /**
