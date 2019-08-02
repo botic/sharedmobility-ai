@@ -5,6 +5,7 @@ const {
 const pgp = require("pg-promise")();
 
 const config = require("../../config");
+const logger = require("../../logging");
 const {
     STATION_OPERATIONAL,
     STATION_OUTAGE,
