@@ -113,7 +113,7 @@ function stationToSnapshot(station) {
  * @returns {DateTime} a Luxon DateTime object representing the create time of the given filename
  */
 function filenameToDateTime(filename, stationTimezoneName) {
-    const parts = filename.match(/^(?:\.\/)?citybike-(20\d{2}-\d{2}-\d{2})__([012]\d_[012345]\d_[012345]\d)\.json$/);
+    const parts = filename.match(/^(?:\.\/)?(?:station-snapshots\/)?citybike-(20\d{2}-\d{2}-\d{2})__([012]\d_[012345]\d_[012345]\d)\.json$/);
     if (!parts || parts.length !== 3) {
         logger.error("Invalid filename! " + filename);
         return null;
