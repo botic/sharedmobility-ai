@@ -2,6 +2,8 @@
 -- Creates the database tables for Postgres
 --
 
+CREATE DATABASE smai WITH ENCODING 'UTF8' LC_COLLATE 'de_AT.UTF8' LC_CTYPE 'de_AT.UTF8';
+
 CREATE TYPE station_status AS ENUM ('operational', 'outage', 'unknown');
 
 CREATE TABLE IF NOT EXISTS smai_service (
