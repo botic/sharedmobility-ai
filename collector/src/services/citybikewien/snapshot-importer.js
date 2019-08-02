@@ -47,18 +47,24 @@ async function importSnapshots(db, inputFile, stations) {
         const citybikeSnapshots = processStationList(obj.network.stations);
 
         for (const citybikeSnapshot of citybikeSnapshots) {
-            const {id} = stations.find(
+            const station = stations.find(
                 station => station.internalId === `${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`
             );
-            smaiSnapshots.push({
-                smaiId: id,
-                timestamp: fileDateTime.toUTC().toSQL(),
-                stationStatus: citybikeSnapshot.snapshot.stationStatus,
-                vehiclesAvailable: citybikeSnapshot.snapshot.vehiclesAvailable,
-                vehiclesFaulty: citybikeSnapshot.snapshot.vehiclesFaulty,
-                boxesAvailable: citybikeSnapshot.snapshot.boxesAvailable,
-                boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
-            });
+
+            if (station) {
+                smaiSnapshots.push({
+                    smaiId: station.id,
+                    timestamp: fileDateTime.toUTC().toSQL(),
+                    stationStatus: citybikeSnapshot.snapshot.stationStatus,
+                    vehiclesAvailable: citybikeSnapshot.snapshot.vehiclesAvailable,
+                    vehiclesFaulty: citybikeSnapshot.snapshot.vehiclesFaulty,
+                    boxesAvailable: citybikeSnapshot.snapshot.boxesAvailable,
+                    boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
+                });
+            } else {
+                logger.warn(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`);
+                logger.warn(JSON.stringify(citybikeSnapshot, null, 2));
+            }
         }
 
         return smaiSnapshots;
