@@ -29,7 +29,7 @@ module.exports = async function(inputFile) {
                             const obj = JSON.parse(data.toString());
                             if (Array.isArray(obj.network.stations) && obj.network.stations.length > 0) {
                                 for (const station of obj.network.stations) {
-                                    const stationKey = `${station.id}`;
+                                    const stationKey = `${station.extra.internal_id}`;
                                     if (stationCollection[stationKey] === undefined) {
                                         stationCollection[stationKey] = {
                                             id: station.id,
