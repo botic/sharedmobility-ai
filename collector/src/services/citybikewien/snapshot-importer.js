@@ -62,8 +62,8 @@ async function importSnapshots(db, inputFile, stations) {
                     boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
                 });
             } else {
-                logger.warn(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`);
-                logger.warn(JSON.stringify(citybikeSnapshot, null, 2));
+                logger.debug(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`);
+                logger.debug(JSON.stringify(citybikeSnapshot, null, 2));
             }
         }
 
