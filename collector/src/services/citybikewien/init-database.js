@@ -84,7 +84,7 @@ async function initializeData(db, stations) {
                     "sta_ser_id, sta_slug, sta_internal_identifier, sta_internal_name, sta_external_name, sta_description, sta_url, sta_address, sta_longitude, sta_latitude, sta_timezone_name" +
                     ") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING sta_id", [
                     ser_id,
-                    (CITYBIKEWIEN_STATION_PREFIX + slugify(station.name)).toLowerCase(),
+                    (CITYBIKEWIEN_STATION_PREFIX + slugify(station.name) + "-" + station.internalId).toLowerCase(),
                     `${station.internalId}-${station.id}`,
                     station.name,
                     "Citybike Wien – " + station.name,
