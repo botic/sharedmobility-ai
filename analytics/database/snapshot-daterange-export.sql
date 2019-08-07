@@ -35,3 +35,21 @@ WHERE
   AND snp_station_status = 'operational'
   AND snp_sta_id = sta_id
 ORDER BY snp_timestamp ASC, sta_internal_identifier ASC
+
+-- only every 15 minutes && only Citybike Wien && minimal result set size
+SELECT
+  snp_sta_id,
+  snp_timestamp,
+  snp_vehicles_available,
+  snp_boxes_available
+FROM
+  smai_snapshot,
+  smai_station
+WHERE
+  sta_ser_id = 2 -- only citybikewien
+  AND snp_sta_id = sta_id
+  AND snp_timestamp >= '2019-06-01'
+  AND snp_timestamp <  '2019-08-01'
+  AND EXTRACT(MINUTE FROM snp_timestamp) IN (7, 24, 37, 52)
+  AND snp_station_status = 'operational'
+ORDER BY snp_timestamp ASC, snp_sta_id ASC
