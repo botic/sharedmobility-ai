@@ -1,3 +1,4 @@
+-- exports all data
 SELECT
   sta_internal_identifier,
   sta_slug,
@@ -13,6 +14,24 @@ FROM
 WHERE
   snp_timestamp >= '2018-07-27'
   AND snp_timestamp <  '2018-07-28'
+  AND snp_station_status = 'operational'
+  AND snp_sta_id = sta_id
+ORDER BY snp_timestamp ASC, sta_internal_identifier ASC
+
+-- only every 15 minutes
+SELECT
+  snp_sta_id,
+  sta_slug,
+  snp_timestamp,
+  snp_vehicles_available,
+  snp_boxes_available
+FROM
+  smai_snapshot,
+  smai_station
+WHERE
+  snp_timestamp >= '2019-06-01'
+  AND snp_timestamp <  '2019-08-01'
+  AND EXTRACT(MINUTE FROM snp_timestamp) IN (7, 24, 37, 52)
   AND snp_station_status = 'operational'
   AND snp_sta_id = sta_id
 ORDER BY snp_timestamp ASC, sta_internal_identifier ASC
