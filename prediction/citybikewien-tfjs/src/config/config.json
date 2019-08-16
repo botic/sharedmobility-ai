@@ -1,0 +1,10 @@
+{
+  "db": {
+    "host": "localhost",
+    "post": 5432,
+    "database": "smai",
+    "user": "smai_user",
+    "password": "smai_password",
+    "idleTimeoutMillis": 5000
+  }
+}

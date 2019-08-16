@@ -1,0 +1,36 @@
+{
+  "name": "citybikewien-tfjs",
+  "version": "1.0.0",
+  "description": "Citybike Wien predictions with TensorFlow.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botic/sharedmobility-ai.git",
+    "directory": "prediction/citybikewien-tfjs"
+  },
+  "keywords": [
+    "tensorflow",
+    "javascript",
+    "sharedmobility"
+  ],
+  "author": "Philipp Naderer-Puiu",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/botic/sharedmobility-ai/issues"
+  },
+  "homepage": "https://github.com/botic/sharedmobility-ai#readme",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^1.2.5",
+    "array.prototype.flat": "^1.2.1",
+    "geolib": "^3.0.4",
+    "jest": "^24.8.0",
+    "luxon": "^1.17.2",
+    "nconf": "^0.10.0",
+    "neat-csv": "^5.1.0",
+    "pg-promise": "^9.0.0",
+    "winston": "^3.2.1"
+  }
+}
