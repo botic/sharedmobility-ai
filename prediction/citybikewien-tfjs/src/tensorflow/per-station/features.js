@@ -1,19 +1,8 @@
 const tf = require("@tensorflow/tfjs-node");
 const flat = require("array.prototype.flat");
 const { DateTime } = require("luxon");
-const {
-    getDistance,
-    isPointInPolygon
-} = require("geolib");
 
-const {
-    CITYBIKEWIEN_TIMEZONE,
-    VIENNA_STEPHANSDOM,
-    VIENNA_POLYGON_CENTER,
-    VIENNA_POLYGON_NORTH,
-    VIENNA_POLYGON_SOUTH,
-    VIENNA_POLYGON_EAST
-} = require("../constants");
+const { CITYBIKEWIEN_TIMEZONE } = require("../../constants");
 
 exports.convertSnapshot =  function(snapshot) {
     return {
@@ -28,9 +17,6 @@ const snapshotToInput = exports.snapshotToInput = function snapshotToInput(snaps
     const dayCategory = new Array(7).fill(0);
     dayCategory[dt.weekday - 1] = 1;
 
-    const hourCategory = new Array(24).fill(0);
-    hourCategory[dt.hour] = 1;
-
     const minuteCategory = new Array(4).fill(0);
     if (dt.minute >= 0 && dt.minute < 15) {
         minuteCategory[0] = 1;
@@ -42,19 +28,9 @@ const snapshotToInput = exports.snapshotToInput = function snapshotToInput(snaps
         minuteCategory[3] = 1;
     }
 
-    const snapshotCoordinates = {
-        latitude: snapshot.sta_latitude,
-        longitude: snapshot.sta_longitude
-    };
-
     return flat([
-        Math.floor(getDistance(snapshotCoordinates, VIENNA_STEPHANSDOM) / 250),
-        isPointInPolygon(snapshotCoordinates, VIENNA_POLYGON_CENTER) ? 1 : 0,
-        isPointInPolygon(snapshotCoordinates, VIENNA_POLYGON_NORTH) ? 1 : 0,
-        isPointInPolygon(snapshotCoordinates, VIENNA_POLYGON_EAST) ? 1 : 0,
-        isPointInPolygon(snapshotCoordinates, VIENNA_POLYGON_SOUTH) ? 1 : 0,
         dayCategory,
-        hourCategory,
+        dt.hour,
         minuteCategory
     ], 1);
 };

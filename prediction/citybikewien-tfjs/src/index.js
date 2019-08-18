@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
 const path = require("path");
 const program = require("commander");
 const pkg = require("../package.json");
@@ -11,12 +10,21 @@ program
     .description(pkg.description)
     .usage("<command> [...]");
 
-// Import
+// Learn for the overall service with all stations
 program
-    .command("learn <input-csv> <output-dir>")
+    .command("pan-service <input-csv> <output-dir>")
     .description("Runs ML on the given training data and stores the resulting model in the given directory.")
     .action((inputCSV = null, outputDir = null) => {
-        const learn = require("./tensorflow/learn");
+        const learn = require("./tensorflow/pan-service/learn");
+        learn(new URL(`file:///${path.normalize(inputCSV)}`), new URL(`file:///${path.normalize(outputDir)}`));
+    });
+
+// Creates a model for every stations
+program
+    .command("per-station <input-csv> <output-dir>")
+    .description("Runs ML on the given training data and stores the resulting model in the given directory.")
+    .action((inputCSV = null, outputDir = null) => {
+        const learn = require("./tensorflow/per-station/learn");
         learn(new URL(`file:///${path.normalize(inputCSV)}`), new URL(`file:///${path.normalize(outputDir)}`));
     });
 

@@ -1,6 +1,6 @@
 const tf = require("@tensorflow/tfjs-node");
 
-const {convertSnapshot} = require("../db/snapshots");
+const {convertSnapshot} = require("./features");
 
 const LEARNING_RATE = 0.001;
 const LOSS = tf.losses.meanSquaredError;
