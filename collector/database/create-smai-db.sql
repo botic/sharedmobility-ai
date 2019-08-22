@@ -49,3 +49,17 @@ CREATE TABLE IF NOT EXISTS smai_snapshot (
     CONSTRAINT valid_boxes_available CHECK (snp_boxes_available >= 0),
     CONSTRAINT valid_boxes_faulty CHECK (snp_boxes_faulty >= 0 or snp_boxes_faulty is null)
 );
+
+CREATE TABLE IF NOT EXISTS smai_weather (
+    wet_id SERIAL,
+    wet_synop_id CHARACTER(5) NOT NULL,
+    wet_timestamp TIMESTAMP NOT NULL,
+    wet_sunshine INTEGER,
+    wet_rain DOUBLE PRECISION,
+    wet_temperature DOUBLE PRECISION,
+    PRIMARY KEY ( wet_id ),
+    CONSTRAINT no_duplicated_records UNIQUE(wet_synop_id, wet_timestamp),
+    CONSTRAINT valid_rain CHECK (wet_rain >= 0 or wet_rain is null),
+    CONSTRAINT valid_sunshine CHECK (wet_sunshine >= 0 or wet_sunshine is null),
+    CONSTRAINT valid_temperature CHECK ((wet_temperature >= -60 and wet_temperature <= 50) or wet_temperature is null)
+);
