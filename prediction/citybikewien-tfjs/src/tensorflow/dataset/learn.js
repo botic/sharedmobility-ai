@@ -1,5 +1,6 @@
 const fs = require("fs");
-const tf = require("@tensorflow/tfjs-node");
+
+const tf = require(`@tensorflow/tfjs-node${process.env.TFJS_GPU === "supported" ? "-gpu" : ""}`);
 
 const config = require("../../config");
 const { convertCsvRecord } = require("./features");
@@ -29,7 +30,7 @@ module.exports = async function(datasetURL, outputURL) {
     });
 
     const history = await model.fitDataset(trainingSet, {
-        epochs: 15,
+        epochs: 50,
         batchSize: 512,
         shuffle: true
     });
