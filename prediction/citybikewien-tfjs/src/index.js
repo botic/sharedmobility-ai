@@ -28,6 +28,15 @@ program
         learn(new URL(`file:///${path.normalize(inputCSV)}`), new URL(`file:///${path.normalize(outputDir)}`));
     });
 
+// Loads a dataset (per HTTPS or local file URI) and generates a model
+program
+    .command("dataset <dataset-url> <output-dir>")
+    .description("Runs ML on the given dataset and stores the resulting model in the given directory.")
+    .action((datasetURL = null, outputDir = null) => {
+        const learn = require("./tensorflow/dataset/learn");
+        learn(new URL(datasetURL), new URL(`file:///${path.normalize(outputDir)}`));
+    });
+
 /**
  * Parses the arguments and executes the associated action.
  */
