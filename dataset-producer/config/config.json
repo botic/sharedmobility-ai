@@ -1,4 +1,5 @@
 {
+    "timeZone": "Europe/Vienna",
     "db": {
         "host": "localhost",
         "post": 5432,

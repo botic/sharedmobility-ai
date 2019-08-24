@@ -12,8 +12,8 @@ module.exports = async function(serviceId, startDate, endDate, outputPath) {
         throw new Error(`Not a directory! ${outputPath}`)
     }
 
-    const startDT = DateTime.fromFormat(`${startDate} 00:00`, "yyyy-MM-dd HH:mm", { zone: "Europe/Vienna" });
-    const endDT = DateTime.fromFormat(`${endDate} 00:00`, "yyyy-MM-dd HH:mm", { zone: "Europe/Vienna" });
+    const startDT = DateTime.fromFormat(`${startDate} 00:00`, "yyyy-MM-dd HH:mm", { zone: config.get("timeZone") });
+    const endDT = DateTime.fromFormat(`${endDate} 00:00`, "yyyy-MM-dd HH:mm", { zone: config.get("timeZone") });
 
     if (startDT > endDT) {
         throw new Error("Start date is after end date!");
