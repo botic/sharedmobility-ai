@@ -6,8 +6,8 @@ const { CITYBIKEWIEN_TIMEZONE } = require("../../constants");
 
 exports.convertCsvRecord =  function(record) {
     return {
-        xs: tf.tensor2d([recordToInput(record)]),
-        ys: tf.tensor2d([recordToOutput(record)])
+        xs: tf.tensor2d([recordToInput(record)], [1, 48], "int32"),
+        ys: tf.tensor2d([recordToOutput(record)], [1, 4],"int32")
     }
 };
 
