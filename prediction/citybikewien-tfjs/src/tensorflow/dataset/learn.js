@@ -1,8 +1,6 @@
 const fs = require("fs");
-
 const tf = require(`@tensorflow/tfjs-node${process.env.TFJS_GPU === "supported" ? "-gpu" : ""}`);
 
-const config = require("../../config");
 const { convertCsvRecord } = require("./features");
 
 const LEARNING_RATE = 0.001;
@@ -18,7 +16,7 @@ module.exports = async function(datasetURL, outputURL) {
 
     // build the layered model
     model.add(tf.layers.dense({units: INPUT_LENGTH * 4, activation: "relu", inputShape: [INPUT_LENGTH]}));
-    model.add(tf.layers.dense({units: 100, activation: "relu"}));
+    model.add(tf.layers.dense({units: 150, activation: "relu"}));
     //model.add(tf.layers.dense({units: 100, activation: "relu"}));
     model.add(tf.layers.dense({units: 4, activation: "softmax"}));
 
@@ -30,7 +28,7 @@ module.exports = async function(datasetURL, outputURL) {
     });
 
     const history = await model.fitDataset(trainingSet, {
-        epochs: 50,
+        epochs: 25,
         batchSize: 512,
         shuffle: true
     });
@@ -42,7 +40,14 @@ module.exports = async function(datasetURL, outputURL) {
         console.log(`Model for ${datasetURL.pathname} => acc ${acc} | loss ${loss}`);
     }
 
-    await model.save(
-        new URL(`${outputURL.href}/smai_model_${datasetURL.pathname.replace(/[\\:.\/]/g, "_")}`).href
+    const pathName = datasetURL.pathname
+        .substr(datasetURL.pathname.lastIndexOf("/") + 1)
+        .replace(/[\\:.\/]/g, "_");
+    const modelOutputURL = new URL(`${outputURL.href}/smai_model_${pathName}`);
+    await model.save(modelOutputURL.href);
+
+    fs.writeFileSync(
+        new URL(`${modelOutputURL.href}/history.log.json`),
+        JSON.stringify(history.history, null, 2)
     );
 };
