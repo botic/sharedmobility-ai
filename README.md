@@ -10,7 +10,7 @@
 ## Core Team
 
 - Philipp Naderer-Puiu / [@botic](https://twitter.com/botic)
-- Weronika Wesołowska
+- Weronika Wesołowska / [weronikawu](https://github.com/weronikawu)
 - Lisa Vietze
 
 ## Supported by Netidee Call 13
