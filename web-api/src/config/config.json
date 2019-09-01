@@ -1,0 +1,10 @@
+{
+    "port": 8080,
+    "storage": {
+        "bucket": "smai-public-datasets"
+    },
+    "smai": {
+        "maxServiceId": 2,
+        "maxStationId": 128
+    }
+}
