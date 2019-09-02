@@ -12,6 +12,10 @@ You find more information about our Netidee grant on our [Netidee project page](
 
 <img src="https://sharedmobility.ai/wp-content/uploads/2018/11/netidee-Logo-HiRes300dpi-Projekte-Standard-768x233.jpg" alt="Netidee Logo" width="250">
 
+# Materials for Press and Publications
+
+All logos and images are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en). Please attribute our projekt with *SharedMobility.ai* as text.
+
 ## Logos
 
 <a rel="download" href="https://storage.googleapis.com/smai-public-assets/logos/logo-sharedmobility-signet.svg">Signet:</a>
