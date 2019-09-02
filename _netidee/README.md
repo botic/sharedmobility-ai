@@ -26,6 +26,8 @@ All logos and images are licensed under [CC BY 4.0](https://creativecommons.org/
 
 All photos are licensed under Creative Commons. Please use the following attribution: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en) by Luiza Puiu
 
+* [Weronika and Philipp working on the prediction models](https://storage.googleapis.com/smai-public-assets/photos/team/201905181220-0002-PNL_4577-Luiza%20Puiu.jpg)
+
 ### Citybike Wien
 
 * [Citybike Wien station at Museumsquartier](https://storage.googleapis.com/smai-public-assets/photos/citybikewien/201908221823-PNL0010-Luiza%20Puiu.jpg)
