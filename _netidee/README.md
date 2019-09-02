@@ -39,4 +39,7 @@ All photos are licensed under Creative Commons. Please use the following attribu
 
 ### SeestadtFLOTTE
 
+* [SeestadtFLOTTE bikes in a station](https://storage.googleapis.com/smai-public-assets/photos/seestadtflotte/20181207-Philipp%20Naderer-Puiu_IMG_1506.jpg)
+* [SeestadtFLOTTE station sign during sunset](https://storage.googleapis.com/smai-public-assets/photos/seestadtflotte/20181207-Philipp%20Naderer-Puiu_IMG_1519.jpg)
+* [SeestadtFLOTTE station at a central square with two bikes](https://storage.googleapis.com/smai-public-assets/photos/seestadtflotte/20181207-Philipp%20Naderer-Puiu_IMG_1522.jpg)
 * [Philipp riding a SeestadtFLOTTE e-Bike](https://storage.googleapis.com/smai-public-assets/photos/seestadtflotte/201906101101-PNL7225-Luiza%20Puiu.jpg)
