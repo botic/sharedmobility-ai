@@ -21,5 +21,5 @@ You find more information about our Netidee grant on our [Netidee project page](
 
 # License
 
-- Source code and similar artifacts are licensed under GNU Affero General Public License  3.0 (AGPL 3.0)
-- Documentation, project reports and similar artifacts are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)
+- Source code and similar artifacts are licensed under GNU Affero General Public License  3.0 ([AGPL 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html))
+- Documentation, project reports and similar artifacts are licensed under Creative Commons Attribution 4.0 International ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/))
