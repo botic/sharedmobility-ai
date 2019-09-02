@@ -1,16 +1,12 @@
-# What do we do?
+# Netidee?
 
-SharedMobility.ai removes customer frustration from shared mobility services.
-We saw the rise of shared mobility services in the last years. Most of the newcomers are free-floating shared-use systems.
-These systems operate on a data-driven approach and try to reach profitability by optimizing their fleets.
-Station-based solutions need enhancements by smart data-driven technologies to keep pace with their new competitors.
-SharedMobility.ai is an Open Source approach to provide simple smart features to existing station-based services.
+**We are supported by Netidee Call 13!**
 
-## Supported by Netidee Call 13
+We got a funding by Netidee to work on this project and try to help existing station-based shared mobility services to catch up with free-floating alternatives. This creates new Open Data datasets, we show how more intelligent solutions could look like and we interact with the local scientific community, e.g. [aspern.mobil LAB](https://www.mobillab.wien/).
+
+<img src="https://sharedmobility.ai/wp-content/uploads/2018/11/netidee-Logo-HiRes300dpi-Projekte-Standard-768x233.jpg" alt="Netidee Logo" width="210">
 
 You find more information about our Netidee grant on our [Netidee project page](https://netidee.at/sharedmobilityai). Netidee supports Internet and Open Source ideas with up to 50.000 Euro in funding. If you are working on an Open Source projects and are permanent resident in Austria, [apply](https://netidee.at/einreichen) for your own funding!
-
-<img src="https://sharedmobility.ai/wp-content/uploads/2018/11/netidee-Logo-HiRes300dpi-Projekte-Standard-768x233.jpg" alt="Netidee Logo" width="250">
 
 # Materials for Press and Publications
 
