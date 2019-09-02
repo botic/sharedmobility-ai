@@ -35,11 +35,53 @@ app.get("/models/:service/:station", [
         prefix
     });
 
-    res.status(200).send(files
+    const folders = new Set(files
         .map(f => f.name)
-        .filter(name => name !== prefix && name.endsWith("/"))
-        .map(name => name.match(/\/([^/]+)\/?$/)[1])
-    );
+        .filter(name => name !== prefix && !name.endsWith("/"))
+        .map(name => name.match(/\/station_\d+\/([^/]+)/)[1]));
+
+    res.status(200).send([...folders]);
+});
+
+app.get("/models/:service/:station/:model/summary", [
+    param("service").isInt({ min: 1, max: config.get("smai:maxServiceId") }),
+    param("station").isInt({ min: 1, max: config.get("smai:maxStationId") }),
+    param("model").isString().matches(/[\w_-]{1,255}/i)
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const filePath = `service_${req.params.service}/station_${req.params.station}/${req.params.model}/model.json`;
+
+    const storage = new Storage();
+    const bucket = storage.bucket(config.get("storage:bucket"));
+    const file = bucket.file(filePath);
+
+    const exists = (await file.exists())[0];
+    if (!exists) {
+        return res.status(404).json({ errors: [{ msg: `Not found: ${req.params.model}` }] });
+    }
+
+    const isPublic = (await file.isPublic())[0];
+    if (!isPublic) {
+        return res.status(403).json({ errors: [{ msg: `Forbidden.` }] });
+    }
+
+    const publicURL = `https://storage.googleapis.com/${config.get("storage:bucket")}/${filePath}`;
+    try {
+        const model = await tf.loadLayersModel(publicURL);
+
+        const summary = [];
+        model.summary(80, [0.45, 0.85, 1], line => summary.push(line));
+
+        res.set("Content-Type", "text/plain");
+        return res.status(200).send(summary.join("\r\n"));
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ errors: [{ msg: `Internal Server Error.` }] });
+    }
 });
 
 app.get("/predict/:service/:station", [
@@ -57,7 +99,7 @@ app.get("/predict/:service/:station", [
     }
 
     const modelName = req.query.model || "best";
-    const filePath = `service_${req.params.service}/station_${req.params.station}/${modelName}/`;
+    const filePath = `service_${req.params.service}/station_${req.params.station}/${modelName}/model.json`;
 
     const storage = new Storage();
     const bucket = storage.bucket(config.get("storage:bucket"));
@@ -123,7 +165,7 @@ app.get("/predict/:service/:station", [
 
     const publicURL = `https://storage.googleapis.com/${config.get("storage:bucket")}/${filePath}`;
     try {
-        const model = await tf.loadLayersModel(publicURL + "model.json");
+        const model = await tf.loadLayersModel(publicURL);
 
         const dt = DateTime.utc();
         const prediction2d = await model.predict(tf.tensor2d([
@@ -134,12 +176,16 @@ app.get("/predict/:service/:station", [
             toInputArray(dt.plus({ minutes: 60 } ), rain, sunshine, temperature),
         ]));
         const predictions = await prediction2d.array();
-        return res.status(200).json(predictions.map(prediction => {
-            return {
-                message: humanReadableMessage(prediction),
-                prediction
-            }
-        }));
+        return res.status(200).json({
+            context: { timestamp: dt.toISO(), rain, sunshine, temperature },
+            predictions: predictions.map((prediction, index) => {
+                return {
+                    timestamp: dt.plus({ minutes: 15 * index }).toISO(),
+                    message: humanReadableMessage(prediction),
+                    prediction
+                }
+            })
+        });
     } catch (e) {
         console.error(e);
         return res.status(500).json({ errors: [{ msg: `Internal Server Error.` }] });
