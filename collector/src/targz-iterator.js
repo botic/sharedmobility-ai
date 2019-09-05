@@ -84,7 +84,7 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                         try {
                             obj = JSON.parse(data.toString());
                         } catch (e) {
-                            console.warn(`Found invalid snapshot!`)
+                            logger.warn(`Found invalid snapshot!`)
                             return push({ smaiSnapshots: [], next });
                         }
 
@@ -115,7 +115,8 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                                 next
                             });
                         } else {
-                            return fail(Error(`No snapshots returned by the converter!`));
+                            logger.warn(Error(`No snapshots returned by the converter!\n${JSON.stringify(obj, null, 2)}`));
+                            return push({ smaiSnapshots: [], next });
                         }
                     }));
                 };
