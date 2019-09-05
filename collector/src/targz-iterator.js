@@ -79,17 +79,28 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                     stream.pipe(concat((data) => {
                         // data is quite large since it carries so many non-relevant details,
                         // though parsing should take not to long, so use the standard blocking one
-                        const obj = JSON.parse(data.toString());
+                        let obj;
+
+                        try {
+                            obj = JSON.parse(data.toString());
+                        } catch (e) {
+                            console.warn(`Found invalid snapshot!`)
+                            return push({ smaiSnapshots: [], next });
+                        }
+
+                        if (!obj) {
+                            return fail(Error(`Cound not parse snapshot object: ${obj}`));
+                        }
 
                         const smaiSnapshots = snapshotConverter(obj, header);
                         if (!Array.isArray(smaiSnapshots)) {
-                            fail(Error(`A snapshot converter must return an array of snapshots, but returned ${typeof smaiSnapshots}`));
+                            return fail(Error(`A snapshot converter must return an array of snapshots, but returned ${typeof smaiSnapshots}`));
                         }
 
                         // validates every converted snapshot
                         const invalidSnapshot = smaiSnapshots.find(snapshot => !isValidSnapshot(snapshot));
                         if (invalidSnapshot !== undefined) {
-                            fail(Error(`Invalid snapshot provided by the snapshot converter function!\n${JSON.stringify(invalidSnapshot, null, 2)}`));
+                            return fail(Error(`Invalid snapshot provided by the snapshot converter function!\n${JSON.stringify(invalidSnapshot, null, 2)}`));
                         }
 
                         // security check: is the object valid?
@@ -99,12 +110,12 @@ module.exports = async function(db, inputFile, snapshotConverter) {
                             //   2.) subsequently call next() to notify the tar reader for continuation
                             //
                             // we use EventIterator's push() to yield into the async iterable for-wait-of loop
-                            push({
+                            return push({
                                 smaiSnapshots,
                                 next
                             });
                         } else {
-                            fail(Error(`No snapshots returned by the converter!`));
+                            return fail(Error(`No snapshots returned by the converter!`));
                         }
                     }));
                 };
