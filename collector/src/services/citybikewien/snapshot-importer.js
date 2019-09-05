@@ -48,7 +48,7 @@ async function importSnapshots(db, inputFile, stations) {
 
         for (const citybikeSnapshot of citybikeSnapshots) {
             const station = stations.find(
-                station => station.internalId === `${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`
+                station => station.internalId === `${citybikeSnapshot.station.extra.internal_id}`
             );
 
             if (station) {
@@ -62,7 +62,7 @@ async function importSnapshots(db, inputFile, stations) {
                     boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
                 });
             } else {
-                logger.debug(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}-${citybikeSnapshot.station.id}`);
+                logger.debug(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}`);
                 logger.debug(JSON.stringify(citybikeSnapshot, null, 2));
             }
         }
