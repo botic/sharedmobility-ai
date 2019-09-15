@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const config = require("../src/config");
-const port = normalizePort(config.get("port") || process.env.PORT || "8080");
+const port = normalizePort(process.env.PORT || config.get("port") || "8080");
 
 const app = require("../src/app");
 app.set("port", port);
