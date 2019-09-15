@@ -1,5 +1,15 @@
 {
     "port": 8080,
+    "cache": {
+        "models": {
+            "max": 25,
+            "maxAge": 86400000
+        },
+        "weather": {
+            "max": 25,
+            "maxAge": 300000
+        }
+    },
     "storage": {
         "bucket": "smai-public-models"
     },

@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+const config = require("../src/config");
+const port = normalizePort(config.get("port") || process.env.PORT || "8080");
+
+const app = require("../src/app");
+app.set("port", port);
+
+const http = require("http");
+const server = http.createServer(app);
+
+console.log(`Listening on port ${port} ...`);
+server.listen(port);
+
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
