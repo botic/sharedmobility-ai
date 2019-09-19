@@ -78,7 +78,7 @@ exports.toInputArray = function(dt, rain, sunshine, temperature) {
 
 const THRESHOLD = 0.8;
 exports.humanReadableMessage = function(prediction) {
-    if (prediction.filter(val => val >= THRESHOLD).lenght > 1) {
+    if (prediction.filter(val => val >= THRESHOLD).length > 1) {
         return "indecisive";
     }
 
