@@ -1,16 +1,15 @@
 <template>
     <v-app>
-        <v-app-bar app clipped-left clipped-right>
-            <v-img
-                alt="SharedMobility.ai"
-                :src="require('./assets/logo.svg')"
-                contain
-                height="38px"
-                width="38px"
-            />
-            <v-toolbar-title class="hidden-xs-only">Citybike Wien Demo</v-toolbar-title>
-            <v-spacer/>
-        </v-app-bar>
+        <v-toolbar>
+            <v-row class="toolbar-header">
+                <v-col class="pl-8 d-flex">
+                    <img class="toolbar-logo" alt="SharedMobility.ai" :src="require('./assets/logo.svg')" />
+                </v-col>
+                <v-col class="text-right pr-8 hidden-xs-only" align-self="center">
+                    Citybike Wien Demo
+                </v-col>
+            </v-row>
+        </v-toolbar>
 
         <v-content>
             <StationList/>
@@ -31,3 +30,15 @@
         }),
     };
 </script>
+
+<style lang="scss">
+    .toolbar-header {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .toolbar-logo {
+        display: inline-block;
+        width: auto;
+        max-height: 38px;
+    }
+</style>
