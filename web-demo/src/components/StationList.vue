@@ -1,8 +1,8 @@
 <template>
-    <v-container>
-        <v-layout wrap>
-            <v-flex xs12>
-                <v-expansion-panels accordion>
+    <v-container class="stationlist-container">
+        <v-row wrap>
+            <v-col>
+                <v-expansion-panels accordion popout>
                     <v-expansion-panel v-for="station in stations" :key="station.id">
                         <v-expansion-panel-header class="header-row">
                             <div>
@@ -15,8 +15,8 @@
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
@@ -43,6 +43,10 @@
 </script>
 
 <style lang="scss">
+    .stationlist-container {
+        max-width: 900px;
+    }
+
     .header-row {
         h2 {
             display: block;
