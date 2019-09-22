@@ -12,19 +12,14 @@
         </v-toolbar>
 
         <v-content>
-            <StationList/>
+            <router-view></router-view>
         </v-content>
     </v-app>
 </template>
 
 <script>
-    import StationList from "./components/StationList";
-
     export default {
         name: "App",
-        components: {
-            StationList,
-        },
         data: () => ({
             //
         }),
