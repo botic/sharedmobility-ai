@@ -2,10 +2,10 @@
     <div class="prediction">
         <div v-if="loaded">
             <v-row no-gutters class="body-2 py-2 prediction-row" v-for="(prediction, index) in predictions" :key="prediction.timestamp">
-                <v-col cols="3" v-if="showTime">
+                <v-col v-if="showTime" @click="showTime = false" class="time-details" cols="3">
                     {{ prediction.dt.toFormat("HH:mm") }} Uhr
                 </v-col>
-                <v-col cols="3" v-else class="text-left" align-self="center">
+                <v-col @click="showTime = true" cols="3" v-else class="text-left time-details" align-self="center">
                     <span v-if="index === 0">Jetzt</span>
                     <span v-else>&plus;&thinsp;{{ index * 15 }}&thinsp;min</span>
                 </v-col>
@@ -20,15 +20,27 @@
                         <template v-if="prediction.forecast.state === -2">😢 Prognose schwankt zu stark</template>
                         <template v-if="prediction.forecast.state === -1">🚨 Prognose fehlerhaft</template>
                         <template v-if="prediction.forecast.state === 1">
-                            🔮 Prognose unsicher,<br class="hidden-sm-and-up">
-                            nur {{ formatPercent(prediction.forecast.highest.y) }}&thinsp;% Wahrscheinlichkeit
+                            🔮 Prognose schwankt
                         </template>
                         <template v-if="prediction.forecast.state === 2">⚠️ Prognose divergiert</template>
                     </div>
                 </v-col>
             </v-row>
 
-            <h2 class="subtitle-1 mt-8 mb-5 text-center">Details zur Prognose</h2>
+            <h2 class="title mt-9 mb-2 text-center">Echtzeit-Daten</h2>
+            <div class="text-center">
+                <div>
+                    <template v-if="currentClass === 0">🚲🚲 voller Räder 🚲🚲</template>
+                    <template v-if="currentClass === 1">🚲 ausreichend Räder 🚲</template>
+                    <template v-if="currentClass === 2">🚲 wenige Räder </template>
+                    <template v-if="currentClass === 3">🚳 kaum&thinsp;/&thinsp;keine Räder</template>
+                </div>
+                <div class="text--secondary caption">
+                    (Station zu {{ formatPercent(currentLoad) }}&thinsp;% gefüllt)
+                </div>
+            </div>
+
+            <h2 class="title mt-8 mb-5 text-center">Details zur Prognose</h2>
             <v-divider></v-divider>
             <v-row class="my-4" no-gutters>
                 <v-col class="weather">&#127774; {{ context.sunshine }}&thinsp;%</v-col>
@@ -69,15 +81,42 @@
 
     export default {
         data: () => ({
-            loaded: false,
+            loadedPrediction: false,
+            loadedRealtime: false,
             showTime: false,
             predictions: [],
-            context: {}
+            context: {},
+            realtime: []
         }),
         props: {
             station: {
                 type: Object,
                 required: true
+            }
+        },
+        computed: {
+            loaded() {
+                return this.loadedPrediction && this.loadedRealtime;
+            },
+            realtimeStation() {
+                if (!this.realtime || this.realtime.length === 0) {
+                    return null;
+                }
+                return this.realtime.find(cbs => cbs.extra.internal_id === this.station.internalIdentifier);
+            },
+            currentLoad() {
+                return this.realtimeStation.free_bikes / (this.realtimeStation.empty_slots + this.realtimeStation.free_bikes);
+            },
+            currentClass() {
+                if (this.currentLoad > 0.8) {
+                    return 0;
+                } else if (this.currentLoad > 0.5) {
+                    return 1;
+                } else if (this.currentLoad > 0.2) {
+                    return 2;
+                } else {
+                    return 3;
+                }
             }
         },
         created() {
@@ -94,9 +133,19 @@
                         }
                     });
 
-                    this.loaded = true;
+                    this.loadedPrediction = true;
                 }).catch(function(ex) {
                     console.error("Prediction failed", ex);
+                });
+
+            // load the realtime data
+            fetch(`https://api.citybik.es/v2/networks/citybike-wien`)
+                .then((response) => response.json())
+                .then(json => {
+                    this.realtime = json.network.stations;
+                    this.loadedRealtime = true;
+                }).catch(function(ex) {
+                    console.error("Loading citybikes failed", ex);
                 });
         },
         methods: {
@@ -152,7 +201,7 @@
                 let diverged = false;
                 classes.push(sortedPrediction[0].index);
                 for (let i = 0; i < sortedPrediction.length - 1; i++) {
-                    if ((sortedPrediction[i].y - sortedPrediction[i + 1].y) <= 0.15 &&
+                    if ((sortedPrediction[i].y - sortedPrediction[i + 1].y) <= 0.2 &&
                         (sortedPrediction[i].y + sortedPrediction[i + 1].y) >= 0.85) {
                         // so check if both are around the same class => if not, the prediction spreads
                         if (Math.abs(sortedPrediction[i].index - sortedPrediction[i + 1].index) !== 1) {
@@ -177,6 +226,10 @@
 
 <style lang="scss">
     .prediction {
+        .time-details {
+            cursor: pointer;
+        }
+
         .weather {
             text-align: center;
         }
