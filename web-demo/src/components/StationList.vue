@@ -1,5 +1,5 @@
 <template>
-    <v-container class="stationlist-container">
+    <v-container class="station-list-container">
         <v-row wrap>
             <v-col>
                 <v-expansion-panels accordion popout>
@@ -24,6 +24,9 @@
     import Prediction from "./Prediction";
     const stationListUrl = "https://storage.googleapis.com/smai-public-datasets/_metadata/smai_station_export.json";
 
+    /**
+     * Renders a list of expandable stations.
+     */
     export default {
         components: {Prediction},
         data: () => ({
@@ -34,7 +37,7 @@
                 .then((response) => response.json())
                 .then(json => {
                     this.stations = json
-                        .filter(station => station.serviceId === 2);
+                        .filter(station => station.serviceId === 2); // only use Citybike Wien stations for now
                 }).catch(function(ex) {
                     console.error("Loading station list failed", ex)
                 });
@@ -43,19 +46,19 @@
 </script>
 
 <style lang="scss">
-    .stationlist-container {
+    .station-list-container {
         max-width: 900px;
-    }
 
-    .header-row {
-        h2 {
-            display: block;
-            width: 100%;
-        }
+        .header-row {
+            h2 {
+                display: block;
+                width: 100%;
+            }
 
-        .description {
-            display: block;
-            width: 100%;
+            .description {
+                display: block;
+                width: 100%;
+            }
         }
     }
 </style>
