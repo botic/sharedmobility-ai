@@ -2,13 +2,17 @@
     <div class="prediction">
         <div v-if="loaded">
             <v-row no-gutters class="body-2 py-2 prediction-row" v-for="(prediction, index) in predictions" :key="prediction.timestamp">
+
+                <!-- click on the time field reveals the absolute time, not just a human readable diff -->
                 <v-col v-if="showTime" @click="showTime = false" class="time-details" cols="3">
                     {{ prediction.dt.toFormat("HH:mm") }} Uhr
                 </v-col>
-                <v-col @click="showTime = true" cols="3" v-else class="text-left time-details" align-self="center">
+                <v-col v-else @click="showTime = true" cols="3" class="text-left time-details" align-self="center">
                     <span v-if="index === 0">Jetzt</span>
                     <span v-else>&plus;&thinsp;{{ index * 15 }}&thinsp;min</span>
                 </v-col>
+
+                <!-- the prediction itself -->
                 <v-col cols="9">
                     <div class="prediction-class text-center" v-for="clazz of prediction.forecast.classes" :key="clazz">
                         <template v-if="clazz === 0">🚲🚲 voller Räder 🚲🚲</template>
@@ -25,6 +29,7 @@
                         <template v-if="prediction.forecast.state === 2">⚠️ Prognose divergiert</template>
                     </div>
                 </v-col>
+
             </v-row>
 
             <h2 class="title mt-9 mb-2 text-center">Echtzeit-Daten</h2>
@@ -149,12 +154,33 @@
                 });
         },
         methods: {
+            /**
+             * Quick function to format the probability for the detailed prediction output.
+             *
+             * @param {number} y probability in float format
+             * @return {string} percent-like formatted probability
+             */
             formatPrediction(y) {
                 return (y * 100).toFixed(2);
             },
+            /**
+             * Quick helper function to format a float as percent without any decimal places.
+             *
+             * @param {number} y probability in float format
+             * @return {string}
+             */
             formatPercent(y) {
-                return Math.round(y * 100);
+                return String(Math.round(y * 100));
             },
+            /**
+             * Take a raw prediction for all four result classes and returns a object that makes it easy to display it
+             * in the interface.
+             *
+             * @param {Array.<number>} prediction the prediction's four result classes in an array
+             * @return {{classes: *, state: *}} object containing a state
+             * (0 = everything is okay, >= 1 = some issues with the prediction itself; <= -1 = error state),
+             * the classes to display as an array
+             */
             analyzePrediction(prediction) {
                 let state = 0;
                 const sortedPrediction = prediction
@@ -168,12 +194,13 @@
 
                 // no prediction has been possible
                 if (sortedPrediction.length === 0) {
-                    return { state: -1, classes: [], highest: null };
+                    return { state: -1, classes: [] };
                 }
 
                 // the prediction is more or less random
+                // note: this should never occur with the "best" model for each station
                 if (sortedPrediction[0].y < 0.5 && sortedPrediction.every(p => p.y >= 0.2)) {
-                    return { state: -2, classes: [], highest: sortedPrediction[0] };
+                    return { state: -2, classes: [] };
                 }
 
                 //
@@ -190,7 +217,7 @@
                         state = 1;
                     }
 
-                    return { state, classes: [sortedPrediction[0].index], highest: sortedPrediction[0] };
+                    return { state, classes: [sortedPrediction[0].index] };
                 }
 
                 // assertion: length must be >= 2 at this point ...
@@ -198,27 +225,39 @@
                     throw new Error(`Invalid code state! Must have at least two predictions at this point.`);
                 }
 
+                // diverged = the probable classes are not next to each other, e.g. full and empty
                 let diverged = false;
+
+                // always push the class with the highest probability to the result message
                 classes.push(sortedPrediction[0].index);
+
+                // checks if other classes should be included in the result of the prediction
                 for (let i = 0; i < sortedPrediction.length - 1; i++) {
                     if ((sortedPrediction[i].y - sortedPrediction[i + 1].y) <= 0.2 &&
                         (sortedPrediction[i].y + sortedPrediction[i + 1].y) >= 0.85) {
+
                         // so check if both are around the same class => if not, the prediction spreads
                         if (Math.abs(sortedPrediction[i].index - sortedPrediction[i + 1].index) !== 1) {
                             diverged = true;
                         }
 
+                        // this class is also with a fairly high probability => include it in the result message
                         classes.push(sortedPrediction[i + 1].index);
                     }
                 }
 
+                // states > 0 indicate a valid prediction, but with some inconsistencies / pitfalls
                 if (diverged) {
+                    // if diverged (probable classes are not next to each other),
+                    // the UI will show a warning
                     state = 2;
                 } else if (sortedPrediction[0].y <= 0.75) {
+                    // the class with the highest probability is still under 0.75 likelihood =>
+                    // UI will show a warning to be careful with the result
                     state = 1;
                 }
 
-                return { state, classes, highest: sortedPrediction[0] };
+                return { state, classes };
             }
         }
     };
