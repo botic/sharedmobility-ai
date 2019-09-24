@@ -1,14 +1,14 @@
 <template>
     <v-app>
         <v-toolbar>
-            <v-row class="toolbar-header">
-                <v-col class="pl-8 d-flex">
-                    <img class="toolbar-logo" alt="SharedMobility.ai" :src="require('./assets/logo.svg')" />
-                </v-col>
-                <v-col class="text-right pr-8 hidden-xs-only" align-self="center">
+            <div :class="{ 'smai-toolbar-header': true, 'vtfy-small': $vuetify.breakpoint.smAndDown, 'vtfy-xs': $vuetify.breakpoint.xsOnly }">
+                <span class="smai-toolbar-logo">
+                    <img alt="SharedMobility.ai" :src="require('./assets/logo.svg')" />
+                </span>
+                <span class="smai-toolbar-title hidden-xs-only">
                     Citybike Wien Demo
-                </v-col>
-            </v-row>
+                </span>
+            </div>
         </v-toolbar>
 
         <v-content>
@@ -42,14 +42,44 @@
 </script>
 
 <style lang="scss">
-    .toolbar-header {
-        max-width: 900px;
+    .smai-toolbar-header {
+        display: flex;
         margin: 0 auto;
-    }
-    .toolbar-logo {
-        display: inline-block;
-        width: auto;
-        max-height: 38px;
+        width: 100%;
+        max-width: 844px;
+        height: 64px;
+        justify-content: space-between;
+
+        > span {
+            padding: 8px 0;
+            flex: 1 1 auto;
+            max-width: 100%;
+
+            display: flex;
+            align-items: center;
+        }
+
+        &.vtfy-small {
+            height: 58px;
+        }
+
+        &.vtfy-xs {
+            .smai-toolbar-logo {
+                justify-content: space-around;
+            }
+        }
+
+        .smai-toolbar-logo {
+            img {
+                display: block;
+                width: auto;
+                height: 45px;
+            }
+        }
+
+        .smai-toolbar-title {
+            justify-content: flex-end;
+        }
     }
 
     .netidee-footer {
