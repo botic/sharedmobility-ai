@@ -1,5 +1,5 @@
 {
-    "name": "web-demo",
+    "name": "@sharedmobilityai/web-demo",
     "description": "The SharedMobility.ai proof of concept frontend app.",
     "version": "1.0.0",
     "private": true,
