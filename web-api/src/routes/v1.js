@@ -13,6 +13,11 @@ const express = require("express");
 const { param, query, validationResult } = require("express-validator");
 const app = module.exports = express();
 
+// configure express to be less noisy
+app.set("etag", false); // we don't need etags ...
+app.set("json spaces", 2); // easier to read output instead of saving some bytes
+app.set("x-powered-by", false); // nobody needs this header
+
 /**
  * Test action, returns the current API version.
  */
