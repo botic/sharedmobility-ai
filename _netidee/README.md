@@ -1,6 +1,6 @@
 # Netidee?
 
-**We are supported by Netidee Call 13!**
+**We were supported by Netidee Call 13!**
 
 We got a funding by Netidee to work on this project and try to help existing station-based shared mobility services to catch up with free-floating alternatives. This creates new Open Data datasets, we show how more intelligent solutions could look like and we interact with the local scientific community, e.g. [aspern.mobil LAB](https://www.mobillab.wien/).
 
@@ -10,7 +10,7 @@ You find more information about our Netidee grant on our [Netidee project page](
 
 # Materials for Press and Publications
 
-All logos and images are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en). Please attribute our projekt with *SharedMobility.ai* as text.
+All logos and images are licensed under [CC BY SA](https://creativecommons.org/licenses/by-sa/4.0/deed.en). Please attribute our projekt with *SharedMobility.ai* as text.
 
 ## Logos
 
@@ -24,7 +24,7 @@ All logos and images are licensed under [CC BY 4.0](https://creativecommons.org/
 
 ## Images
 
-All photos are licensed under Creative Commons. Please use the following attribution: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en) by Luiza Puiu
+All photos are licensed under Creative Commons. Please use the following attribution: [CC BY SA 4.0](https://creativecommons.org/licenses/by/4.0/deed.en) by Luiza Puiu
 
 * [Weronika and Philipp working on the prediction models](https://storage.googleapis.com/smai-public-assets/photos/team/201905181220-0002-PNL_4577-Luiza%20Puiu.jpg)
 
