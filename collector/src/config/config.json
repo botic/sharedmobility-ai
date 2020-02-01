@@ -9,7 +9,7 @@
   },
   "ignoredStations": {
     "citybikewien": [
-      1040
+      "1040"
     ]
   }
 }
