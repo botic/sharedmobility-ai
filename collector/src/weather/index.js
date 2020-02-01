@@ -62,6 +62,8 @@ module.exports = async function(synopId, csvDirectory, startDate) {
         locale: "de-AT"
     });
 
+    logger.info(`Importing from ${currentDateTime.toISO()} to ${endDateTime.toISO()}`);
+
     // prepare the database transaction
     const db = pgp(config.get("db"));
 
