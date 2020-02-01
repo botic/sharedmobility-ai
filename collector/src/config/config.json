@@ -6,5 +6,10 @@
     "user": "smai_user",
     "password": "smai_password",
     "idleTimeoutMillis": 5000
+  },
+  "ignoredStations": {
+    "citybikewien": [
+      1040
+    ]
   }
 }

@@ -37,6 +37,8 @@ module.exports = async (inputFile) => {
  * @return {Promise<any>} promise resolves if all entries have been inserted into the database
  */
 async function importSnapshots(db, inputFile, stations) {
+    const ignoredStations = config.get("ignoredStations:citybikewien") || [];
+
     return targzIterator(db, inputFile, (obj, header) => {
         if (!Array.isArray(obj.network.stations) || obj.network.stations.length === 0) {
             return [];
@@ -61,6 +63,8 @@ async function importSnapshots(db, inputFile, stations) {
                     boxesAvailable: citybikeSnapshot.snapshot.boxesAvailable,
                     boxesFaulty: citybikeSnapshot.snapshot.boxesFaulty
                 });
+            } else if (ignoredStations.indexOf(citybikeSnapshot.station.extra.internal_id) !== -1) {
+                logger.debug(`Ignoring Citybike station with id ${citybikeSnapshot.station.extra.internal_id}`);
             } else {
                 logger.debug(`Could not find Citybike station with id ${citybikeSnapshot.station.extra.internal_id}`);
                 logger.debug(JSON.stringify(citybikeSnapshot, null, 2));
