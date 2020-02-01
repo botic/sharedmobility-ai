@@ -3,7 +3,18 @@
 ## DataSet Producer
 
 The dataset producer exports the <abbr title="SharedMobility.ai">SMAI</abbr> database
-into separate CSV files. These files can be used directly as input datasets by TensorFlow / Keras:
+into separate CSV files.
+
+### Usage
+
+```bash
+# Exports Citybike Wien (service-id = 2) from 2019-05-07 to 2019-12-31 into /tmp
+node index.js export 2 2019-05-07 2019-12-31 /tmp/
+```
+
+### Using the resulting datasets
+
+The produced files can be used directly as input datasets by TensorFlow / Keras:
 
 #### JavaScript / TensorFlow.js
 ```javascript
