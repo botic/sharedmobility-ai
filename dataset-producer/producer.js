@@ -9,7 +9,11 @@ const HOLIDAYS = config.get("holidays");
 
 module.exports = async function(serviceId, startDate, endDate, outputPath) {
     if (!fs.lstatSync(outputPath).isDirectory()) {
-        throw new Error(`Not a directory! ${outputPath}`)
+        throw new Error(`Not a directory! ${outputPath}`);
+    }
+
+    if (!Array.isArray(HOLIDAYS)) {
+        throw new Error(`Config error: 'holidays' property is not an array!`);
     }
 
     const startDT = DateTime.fromFormat(`${startDate} 00:00`, "yyyy-MM-dd HH:mm", { zone: config.get("timeZone") });
