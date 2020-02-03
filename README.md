@@ -6,6 +6,10 @@
 
 - **Analytics:** Scripts to analyze the input data.
 - **Collector:** Reads station data from a `.tar.gz` archive and imports it into the Postgres data backend.
+- **Dataset Producer:** Creates TensorFlow compatible CSV datasets.
+- **Prediction:** Code related to TensorFlow model creation.
+- **Web API:** The public REST API build with Express and Node.
+- **Web Demo:** Vue-based Web application built on top of the Web API.
 
 ## Core Team
 
