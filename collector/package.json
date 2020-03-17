@@ -28,12 +28,12 @@
     "concat-stream": "^2.0.0",
     "event-iterator": "^1.2.0",
     "gunzip-maybe": "^1.4.1",
-    "luxon": "^1.21.3",
+    "luxon": "^1.22.0",
     "nconf": "^0.10.0",
-    "neat-csv": "^5.1.0",
+    "neat-csv": "^5.2.0",
     "pg-promise": "^9.3.6",
-    "slugify": "^1.3.6",
-    "tar-stream": "^2.1.0",
+    "slugify": "^1.4.0",
+    "tar-stream": "^2.1.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
