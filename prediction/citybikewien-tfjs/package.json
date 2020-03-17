@@ -23,15 +23,15 @@
   },
   "homepage": "https://github.com/botic/sharedmobility-ai#readme",
   "dependencies": {
-    "@tensorflow/tfjs-node": "^1.2.8",
-    "@tensorflow/tfjs-node-gpu": "^1.2.8",
-    "array.prototype.flat": "^1.2.1",
-    "geolib": "^3.0.4",
-    "jest": "^24.8.0",
-    "luxon": "^1.17.2",
+    "@tensorflow/tfjs-node": "^1.7.0",
+    "@tensorflow/tfjs-node-gpu": "^1.7.0",
+    "array.prototype.flat": "^1.2.3",
+    "geolib": "^3.2.1",
+    "jest": "^24.9.0",
+    "luxon": "^1.22.0",
     "nconf": "^0.10.0",
-    "neat-csv": "^5.1.0",
-    "pg-promise": "^9.0.0",
+    "neat-csv": "^5.2.0",
+    "pg-promise": "^9.3.6",
     "winston": "^3.2.1"
   }
 }
