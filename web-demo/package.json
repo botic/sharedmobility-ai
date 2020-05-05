@@ -11,10 +11,10 @@
     "dependencies": {
         "core-js": "^2.6.11",
         "geolib": "^3.2.1",
-        "luxon": "^1.22.0",
+        "luxon": "^1.24.1",
         "vue": "^2.6.11",
         "vue-router": "^3.1.6",
-        "vuetify": "^2.2.17"
+        "vuetify": "^2.2.26"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^3.12.1",
@@ -23,7 +23,7 @@
         "babel-eslint": "^10.1.0",
         "eslint": "^5.16.0",
         "eslint-plugin-vue": "^5.0.0",
-        "sass": "^1.26.3",
+        "sass": "^1.26.5",
         "sass-loader": "^7.1.0",
         "vue-cli-plugin-vuetify": "^0.6.3",
         "vue-template-compiler": "^2.6.11",

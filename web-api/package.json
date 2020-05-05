@@ -21,13 +21,13 @@
   "homepage": "https://github.com/botic/sharedmobility-ai#readme",
   "dependencies": {
     "@google-cloud/storage": "^3.5.0",
-    "@tensorflow/tfjs-node": "^1.7.0",
+    "@tensorflow/tfjs-node": "^1.7.4",
     "array.prototype.flat": "^1.2.3",
     "axios": "^0.19.2",
     "express": "^4.17.1",
-    "express-validator": "^6.4.0",
+    "express-validator": "^6.4.1",
     "lru-cache": "^5.1.1",
-    "luxon": "^1.22.0",
+    "luxon": "^1.24.1",
     "nconf": "^0.10.0"
   },
   "devDependencies": {
