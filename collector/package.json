@@ -24,19 +24,19 @@
   },
   "homepage": "https://sharedmobility.ai/",
   "dependencies": {
-    "commander": "^2.20.3",
+    "commander": "^5.1.0",
     "concat-stream": "^2.0.0",
-    "event-iterator": "^1.2.0",
+    "event-iterator": "^2.0.0",
     "gunzip-maybe": "^1.4.2",
     "luxon": "^1.24.1",
     "nconf": "^0.10.0",
     "neat-csv": "^5.2.0",
-    "pg-promise": "^9.3.6",
+    "pg-promise": "^10.5.8",
     "slugify": "^1.4.0",
     "tar-stream": "^2.1.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^26.1.0"
   }
 }
