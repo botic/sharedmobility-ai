@@ -23,7 +23,7 @@
     "@google-cloud/storage": "^3.5.0",
     "@tensorflow/tfjs-node": "^1.7.4",
     "array.prototype.flat": "^1.2.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.1",
     "lru-cache": "^5.1.1",
