@@ -28,7 +28,7 @@
     "array.prototype.flat": "^1.2.3",
     "geolib": "^3.2.1",
     "jest": "^24.9.0",
-    "luxon": "^1.22.0",
+    "luxon": "^2.5.2",
     "nconf": "^0.10.0",
     "neat-csv": "^5.2.0",
     "pg-promise": "^9.3.6",
