@@ -19,7 +19,7 @@
   "homepage": "https://github.com/botic/sharedmobility-ai#readme",
   "dependencies": {
     "commander": "^3.0.0",
-    "luxon": "^1.17.2",
+    "luxon": "^2.5.2",
     "nconf": "^0.10.0",
     "pg-promise": "^9.1.0"
   }
