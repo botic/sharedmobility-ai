@@ -28,7 +28,7 @@
     "concat-stream": "^2.0.0",
     "event-iterator": "^2.0.0",
     "gunzip-maybe": "^1.4.2",
-    "luxon": "^1.24.1",
+    "luxon": "^2.5.2",
     "nconf": "^0.10.0",
     "neat-csv": "^5.2.0",
     "pg-promise": "^10.5.8",
