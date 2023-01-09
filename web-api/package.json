@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.1",
     "lru-cache": "^5.1.1",
-    "luxon": "^1.24.1",
+    "luxon": "^1.28.1",
     "nconf": "^0.10.0"
   },
   "devDependencies": {
